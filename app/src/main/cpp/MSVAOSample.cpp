@@ -25,7 +25,6 @@ void MSVAOSample::InitGL() {
     glEnable(GL_DEPTH_TEST);    //启用深度测试
     glDepthFunc(GL_LEQUAL);
 
-    setupRenderingObject();
 }
 
 void MSVAOSample::PaintGL() {
@@ -75,15 +74,7 @@ void MSVAOSample::ResizeGL(int w, int h) {
 }
 
 void MSVAOSample::loadTextureResources(AAssetManager *pManager) {
-    for (int i = 0; i < 6; i++) {
-        char nameBuff[6];
-        memset(nameBuff, 0, sizeof(nameBuff));
-        sprintf(nameBuff, "%d.png", i + 1);
-        nameBuff[5] = '\0';
-        LOGD("Image Name:%s", nameBuff);
-        MSGLTexture glTexture;
-        m_texID[i] = glTexture.CreateGLTextureFromFile(pManager, nameBuff);
-    }
+   MSBaseSample::loadTextureResources(pManager);
 }
 
 void MSVAOSample::loadShaderResources(AAssetManager *pManager) {

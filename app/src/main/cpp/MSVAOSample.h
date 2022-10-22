@@ -18,8 +18,8 @@ public:
 
     virtual void loadTextureResources(AAssetManager *pManager);
     virtual void loadShaderResources(AAssetManager *pManager);
-    virtual void setupFrameBufferObject();
     virtual void setupRenderingObject();
+    virtual void setupFrameBufferObject();
 };
 
 

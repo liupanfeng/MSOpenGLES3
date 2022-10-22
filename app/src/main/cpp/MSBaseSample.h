@@ -28,11 +28,21 @@ public:
     virtual void loadShaderResources(AAssetManager *pManager)=0;
 
 
-    virtual void loadTextureResources(AAssetManager *pManager){}
+    virtual void setupRenderingObject()=0;
+
+    virtual void loadTextureResources(AAssetManager *pManager){
+        for (int i = 0; i < 6; i++) {
+            char nameBuff[6];
+            memset(nameBuff, 0, sizeof(nameBuff));
+            sprintf(nameBuff, "%d.png", i + 1);
+            nameBuff[5] = '\0';
+            LOGD("Image Name:%s", nameBuff);
+            MSGLTexture glTexture;
+            m_texID[i] = glTexture.CreateGLTextureFromFile(pManager, nameBuff);
+        }
+    }
 
     virtual void setupFrameBufferObject(){}
-
-    virtual void setupRenderingObject()=0;
 
 
 protected:
@@ -46,6 +56,7 @@ protected:
     MSOpenGLShader *m_pOpenGLShader;
 
     float m_angle = 0.0f;
+    float m_nValue = 0.0f;
     GLuint m_texID[6];
 
     /*离屏渲染*/
