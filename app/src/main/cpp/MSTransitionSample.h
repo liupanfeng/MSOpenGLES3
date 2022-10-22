@@ -1,0 +1,14 @@
+//
+// Created by 56930 on 2022/10/22.
+//
+
+#ifndef MSOPENGLES3_MSTRANSITIONSAMPLE_H
+#define MSOPENGLES3_MSTRANSITIONSAMPLE_H
+
+
+class MSTransitionSample {
+
+};
+
+
+#endif //MSOPENGLES3_MSTRANSITIONSAMPLE_H

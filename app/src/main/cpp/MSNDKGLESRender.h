@@ -11,6 +11,8 @@
 #include "MSOpenGLShader.h"
 #include "MSOpenGLVAO.h"
 
+#include "MSBaseSample.h"
+
 class MSNDKGLESRender {
 public:
     MSNDKGLESRender();
@@ -27,22 +29,9 @@ private:
     void loadShaderResources(AAssetManager *pManager);
     void setupFrameBufferObject();
     void setupRenderingObject();
-    void renderTriangle();
 private:
-    float m_angle =0.0f;
-    GLuint m_texID[6];
-
+    MSBaseSample* m_msBaseSample;
     AAssetManager*        m_pAssetManager;
-    /*顶点缓冲对象*/
-    MSOpenGLBuffer*       m_pVBO;
-    /*序列缓冲对象*/
-    MSOpenGLBuffer*       m_pEBO;
-    /*离屏渲染*/
-    MSFrameBufferObject*  m_pFBO;
-    /*VAO缓冲区*/
-    MSOpenGLVAO*          m_pVAO;
-    /*shader 操作帮助类*/
-    MSOpenGLShader*       m_pOpenGLShader;
 };
 
 
