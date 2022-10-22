@@ -58,6 +58,7 @@ public:
 
     virtual void setupFrameBufferObject(){}
 
+    virtual void setupRenderScreenSize(){}
 
 protected:
     /*VAO缓冲区*/
@@ -76,6 +77,7 @@ protected:
     /*离屏渲染*/
     MSFrameBufferObject *m_pFBO;
 
+    glm::vec2  m_nResolution;
 };
 
 

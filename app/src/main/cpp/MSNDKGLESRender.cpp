@@ -2,13 +2,15 @@
 #include "MSNDKGLESRender.h"
 #include "MSVAOSample.h"
 #include "MSTransitionSample.h"
+#include "MSHighLightSample.h"
 
 /**
  * VBO EBO VAO 最佳实践
  */
 MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
 //    m_msBaseSample = new MSVAOSample();  //绘制立方体
-    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
+//    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
+    m_msBaseSample = new MSHighLightSample();   //绘制高光效果
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {
@@ -24,6 +26,7 @@ void MSNDKGLESRender::InitGL() {
         loadTextureResources(m_pAssetManager);
         loadShaderResources(m_pAssetManager);
     }
+    setupRenderScreenSize();
     setupRenderingObject();
 }
 
@@ -60,4 +63,8 @@ void MSNDKGLESRender::setupFrameBufferObject() {
  */
 void MSNDKGLESRender::setupRenderingObject() {
    m_msBaseSample->setupRenderingObject();
+}
+
+void MSNDKGLESRender::setupRenderScreenSize() {
+   m_msBaseSample->setupRenderScreenSize();
 }

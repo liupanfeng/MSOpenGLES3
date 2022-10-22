@@ -106,6 +106,9 @@ void MSOpenGLShader::SetUniformValue(const char* name, GLfloat fValue)
     glUniform1f(glGetUniformLocation(m_shaderProgram, name), fValue);
 }
 
+void MSOpenGLShader::SetUniformValue(const char* name, glm::vec2 vecValue){
+    glUniform2fv(glGetUniformLocation(m_shaderProgram, name),1,glm::value_ptr(vecValue));
+}
 void MSOpenGLShader::SetUniformValue(const char* name, glm::vec3 vec3Value)
 {
     glUniform3fv(glGetUniformLocation(m_shaderProgram, name), 1, glm::value_ptr(vec3Value));

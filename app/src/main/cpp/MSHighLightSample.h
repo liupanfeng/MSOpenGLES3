@@ -21,6 +21,7 @@ public:
     virtual void loadShaderResources(AAssetManager *pManager);
     virtual void setupRenderingObject();
 
+    virtual void setupRenderScreenSize();
 
 };
 

@@ -29,6 +29,9 @@ private:
     void loadShaderResources(AAssetManager *pManager);
     void setupFrameBufferObject();
     void setupRenderingObject();
+
+    void setupRenderScreenSize();
+
 private:
     MSBaseSample* m_msBaseSample;
     AAssetManager*        m_pAssetManager;
