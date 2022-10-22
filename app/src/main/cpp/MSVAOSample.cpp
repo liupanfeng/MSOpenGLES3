@@ -5,12 +5,7 @@
 #include "MSVAOSample.h"
 
 MSVAOSample::MSVAOSample() {
-    m_pVAO = new MSOpenGLVAO();
-    m_pVBO = new MSOpenGLBuffer(MSOpenGLBuffer::VertexBuffer, MSOpenGLBuffer::StaticDraw);
-    m_pEBO = new MSOpenGLBuffer(MSOpenGLBuffer::IndexBuffer, MSOpenGLBuffer::StaticDraw);
-
-
-    m_pOpenGLShader = new MSOpenGLShader();
+    Init();
 }
 
 MSVAOSample::~MSVAOSample() {
@@ -19,12 +14,12 @@ MSVAOSample::~MSVAOSample() {
     MSGLSafePtrDelete(m_pEBO);
 }
 
-void MSVAOSample::InitGL() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glClearDepthf(1.0);
-    glEnable(GL_DEPTH_TEST);    //启用深度测试
-    glDepthFunc(GL_LEQUAL);
+void MSVAOSample::Init() {
+    MSBaseSample::Init();
+}
 
+void MSVAOSample::InitGL() {
+   MSBaseSample::InitGL();
 }
 
 void MSVAOSample::PaintGL() {
@@ -169,3 +164,5 @@ void MSVAOSample::setupRenderingObject() {
     m_pVBO->Release();
     m_pEBO->Release();
 }
+
+

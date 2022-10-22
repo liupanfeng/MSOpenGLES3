@@ -18,7 +18,6 @@
 #include <android/asset_manager.h>
 #include "android_log_util.h"
 
-#include "ImageDef.h"
 
 template<typename T>
 

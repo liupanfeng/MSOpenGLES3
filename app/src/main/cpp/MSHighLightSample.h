@@ -1,15 +1,16 @@
+//
+// Created by 56930 on 2022/10/22.
+//
 
-
-#ifndef MSOPENGLES3_MSTRANSITIONSAMPLE_H
-#define MSOPENGLES3_MSTRANSITIONSAMPLE_H
-
+#ifndef MSOPENGLES3_MSHIGHLIGHTSAMPLE_H
+#define MSOPENGLES3_MSHIGHLIGHTSAMPLE_H
 
 #include "MSBaseSample.h"
 
-class MSTransitionSample : public MSBaseSample {
+class MSHighLightSample :public MSBaseSample {
 public:
-    MSTransitionSample();
-    virtual ~MSTransitionSample();
+    MSHighLightSample();
+    virtual ~MSHighLightSample();
 
     virtual void Init();
     virtual void InitGL();
@@ -20,7 +21,8 @@ public:
     virtual void loadShaderResources(AAssetManager *pManager);
     virtual void setupRenderingObject();
 
+
 };
 
 
-#endif //MSOPENGLES3_MSTRANSITIONSAMPLE_H
+#endif //MSOPENGLES3_MSHIGHLIGHTSAMPLE_H

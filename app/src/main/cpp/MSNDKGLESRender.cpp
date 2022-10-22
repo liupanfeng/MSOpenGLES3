@@ -7,7 +7,8 @@
  * VBO EBO VAO 最佳实践
  */
 MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
-    m_msBaseSample = new MSTransitionSample();
+//    m_msBaseSample = new MSVAOSample();  //绘制立方体
+    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {
@@ -23,7 +24,7 @@ void MSNDKGLESRender::InitGL() {
         loadTextureResources(m_pAssetManager);
         loadShaderResources(m_pAssetManager);
     }
-    m_msBaseSample->setupRenderingObject();
+    setupRenderingObject();
 }
 
 void MSNDKGLESRender::PaintGL() {

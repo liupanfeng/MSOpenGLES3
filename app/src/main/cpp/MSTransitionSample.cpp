@@ -2,11 +2,7 @@
 #include "MSTransitionSample.h"
 
 MSTransitionSample::MSTransitionSample() {
-    m_pVAO = new MSOpenGLVAO();
-    m_pVBO = new MSOpenGLBuffer(MSOpenGLBuffer::VertexBuffer, MSOpenGLBuffer::StaticDraw);
-    m_pEBO = new MSOpenGLBuffer(MSOpenGLBuffer::IndexBuffer, MSOpenGLBuffer::StaticDraw);
-
-    m_pOpenGLShader = new MSOpenGLShader();
+   Init();
 }
 
 MSTransitionSample::~MSTransitionSample() {
@@ -14,17 +10,19 @@ MSTransitionSample::~MSTransitionSample() {
     MSGLSafePtrDelete(m_pVBO);
     MSGLSafePtrDelete(m_pEBO);
 }
+void MSTransitionSample::Init() {
+    MSBaseSample::Init();
+}
 
 void MSTransitionSample::InitGL() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glClearDepthf(1.0);
-    glEnable(GL_DEPTH_TEST);    //启用深度测试
-    glDepthFunc(GL_LEQUAL);
+    MSBaseSample::InitGL();
 
 }
 
 void MSTransitionSample::PaintGL() {
-    LOGD("PaintGL----------------------");
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
     m_nValue += 0.01f;
     if(m_nValue > 1.0f){
         m_nValue = 0.0f;
@@ -125,3 +123,5 @@ void MSTransitionSample::setupRenderingObject() {
     m_pEBO->Release();
 
 }
+
+

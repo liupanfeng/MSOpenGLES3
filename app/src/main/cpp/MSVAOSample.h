@@ -12,6 +12,7 @@ public:
     MSVAOSample();
     virtual ~MSVAOSample();
 
+    virtual void Init();
     virtual void InitGL();
     virtual void PaintGL();
     virtual void ResizeGL(int w, int h);

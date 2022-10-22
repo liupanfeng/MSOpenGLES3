@@ -15,11 +15,25 @@
 class MSBaseSample {
 
 public:
-     MSBaseSample(){}
+     MSBaseSample(){
+
+     }
 
     virtual ~MSBaseSample(){}
 
-    virtual void InitGL()=0;
+    virtual void Init(){
+        m_pVAO = new MSOpenGLVAO();
+        m_pVBO = new MSOpenGLBuffer(MSOpenGLBuffer::VertexBuffer, MSOpenGLBuffer::StaticDraw);
+        m_pEBO = new MSOpenGLBuffer(MSOpenGLBuffer::IndexBuffer, MSOpenGLBuffer::StaticDraw);
+        m_pOpenGLShader = new MSOpenGLShader();
+     }
+
+    virtual void InitGL(){
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClearDepthf(1.0);
+        glEnable(GL_DEPTH_TEST);    //启用深度测试
+        glDepthFunc(GL_LEQUAL);
+     }
 
     virtual void PaintGL()=0;
 
