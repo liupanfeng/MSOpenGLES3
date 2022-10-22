@@ -1,7 +1,7 @@
 #version 300 es
 precision mediump float;
 
-uniform float     iTime;
+uniform float     uValue;
 
 uniform sampler2D iChannel0;
 uniform sampler2D iChannel1;
@@ -16,7 +16,7 @@ vec3 TextureSource(vec2 uv)
 
 vec3 TextureTarget(vec2 uv)
 {
-    return texture(iChannel1, fragCoord).rrr;
+    return texture(iChannel1, fragCoord).rrr;   //texture2D 是2.0的api 3.0已经不用了，需要改否则会出现编译错误
 }
 
 float Hash( vec2 p)
@@ -67,5 +67,5 @@ void main(void)
         if (d < 0.5 ) col += (d-0.4)*33.0*0.5*(0.0+noise(100.*uv+vec2(-ctime*2.,0.)))*vec3(1.5,0.5,0.0);
         else col += tgt; }
 
-    fragColor = vec4(col,1.0f);
+    fragColor = vec4(col,1.0f);   //3.0使用的fragColor
 }
