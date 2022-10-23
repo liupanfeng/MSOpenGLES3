@@ -1,12 +1,12 @@
 #version 300 es
 precision mediump float;
 
-uniform float     uValue;
+uniform float     uValue;   //变量
 
-uniform sampler2D iChannel0;
-uniform sampler2D iChannel1;
+uniform sampler2D iChannel0;   // 纹理采样器
+uniform sampler2D iChannel1;   //
 
-in vec2 fragCoord;
+in vec2 fragCoord;     //片元顶点
 out vec4  fragColor;
 
 vec3 TextureSource(vec2 uv)
@@ -60,7 +60,7 @@ void main(void)
 
     float ctime = mod(uValue*.5,2.5);
 
-    // burn
+    // burn  燃烧部分
     float d = uv.x+uv.y*0.5 + 0.5*fbm(uv*15.1) + ctime*1.3;
     if (d >0.35) col = clamp(col-(d-0.35)*10.,0.0,1.0);
     if (d >0.47) {

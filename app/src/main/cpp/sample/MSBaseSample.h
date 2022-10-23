@@ -58,7 +58,15 @@ public:
 
     virtual void setupFrameBufferObject(){}
 
-    virtual void setupRenderScreenSize(){}
+    virtual void setupRenderScreenSize(){
+        int viewport[4]= {0};
+        glGetIntegerv( GL_VIEWPORT, viewport );
+        int sWidth = viewport[2];
+        int sHeight = viewport[3];
+        m_nResolution = glm::vec2(sWidth,sHeight);
+
+        LOGD("VIEWPORT: %d %d",viewport[2],viewport[3]);
+    }
 
 protected:
     /*VAO缓冲区*/
