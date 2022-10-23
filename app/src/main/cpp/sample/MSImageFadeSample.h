@@ -1,15 +1,17 @@
 //
-// Created by 56930 on 2022/10/22.
+// Created by 56930 on 2022/10/23.
 //
 
-#ifndef MSOPENGLES3_MSBURNPAGESAMPLE_H
-#define MSOPENGLES3_MSBURNPAGESAMPLE_H
+#ifndef MSOPENGLES3_MSIMAGEFADESAMPLE_H
+#define MSOPENGLES3_MSIMAGEFADESAMPLE_H
+
 
 #include "MSBaseSample.h"
-class MSBurnPageSample :public MSBaseSample {
+
+class MSImageFadeSample : public MSBaseSample{
 public:
-    MSBurnPageSample();
-    virtual ~MSBurnPageSample();
+    MSImageFadeSample();
+    virtual ~MSImageFadeSample();
 
     virtual void Init();
     virtual void InitGL();
@@ -19,9 +21,7 @@ public:
     virtual void loadTextureResources(AAssetManager *pManager);
     virtual void loadShaderResources(AAssetManager *pManager);
     virtual void setupRenderingObject();
-
-//    virtual void setupRenderScreenSize();
 };
 
 
-#endif //MSOPENGLES3_MSBURNPAGESAMPLE_H
+#endif //MSOPENGLES3_MSIMAGEFADESAMPLE_H

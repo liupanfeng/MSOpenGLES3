@@ -1,9 +1,10 @@
 
 #include "MSNDKGLESRender.h"
-#include "MSVAOSample.h"
-#include "MSTransitionSample.h"
-#include "MSHighLightSample.h"
-#include "MSBurnPageSample.h"
+#include "sample/MSVAOSample.h"
+#include "sample/MSTransitionSample.h"
+#include "sample/MSHighLightSample.h"
+#include "sample/MSBurnPageSample.h"
+#include "MSImageFadeSample.h"
 
 /**
  * VBO EBO VAO 最佳实践
@@ -12,7 +13,8 @@ MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
 //    m_msBaseSample = new MSVAOSample();  //绘制立方体
 //    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
 //    m_msBaseSample = new MSHighLightSample();   //绘制高光效果
-    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
+//    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
+    m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {

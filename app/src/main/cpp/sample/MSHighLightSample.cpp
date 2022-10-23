@@ -7,7 +7,9 @@ MSHighLightSample::MSHighLightSample() {
 }
 
 MSHighLightSample::~MSHighLightSample() {
-
+    glDeleteTextures(6, m_texID);
+    MSGLSafePtrDelete(m_pVBO);
+    MSGLSafePtrDelete(m_pEBO);
 }
 
 void MSHighLightSample::Init() {

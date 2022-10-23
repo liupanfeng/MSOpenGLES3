@@ -5,12 +5,12 @@
 #ifndef MSOPENGLES3_MSBASESAMPLE_H
 #define MSOPENGLES3_MSBASESAMPLE_H
 
-#include "MSGLCommonDef.h"
-#include "MSOpenGLShader.h"
-#include "MSOpenGLVAO.h"
-#include "MSOpenGLBuffer.h"
-#include "MSGLTexture.h"
-#include "MSFrameBufferObject.h"
+#include "../MSGLCommonDef.h"
+#include "../MSOpenGLShader.h"
+#include "../MSOpenGLVAO.h"
+#include "../MSOpenGLBuffer.h"
+#include "../MSGLTexture.h"
+#include "../MSFrameBufferObject.h"
 
 class MSBaseSample {
 

@@ -11,7 +11,7 @@
 #include "MSOpenGLShader.h"
 #include "MSOpenGLVAO.h"
 
-#include "MSBaseSample.h"
+#include "sample/MSBaseSample.h"
 
 class MSNDKGLESRender {
 public:

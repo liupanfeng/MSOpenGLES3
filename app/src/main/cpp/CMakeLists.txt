@@ -5,10 +5,13 @@ SET(GLM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libglm)
 SET(STBIMG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libstbImage)
 SET(CPPDIR ${CMAKE_CURRENT_SOURCE_DIR})
 
+
 INCLUDE_DIRECTORIES(${GLM_DIR}/include)
 INCLUDE_DIRECTORIES(${STBIMG_DIR}/include)
 
-file(GLOB all_files *.c *.cpp)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/sample)
+
+file(GLOB all_files *.c *.cpp sample/*.cpp)
 
 add_library(
         msopengles3
