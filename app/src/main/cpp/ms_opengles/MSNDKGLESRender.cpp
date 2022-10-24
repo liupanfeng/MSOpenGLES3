@@ -1,9 +1,9 @@
 
 #include "MSNDKGLESRender.h"
-#include "sample/MSVAOSample.h"
-#include "sample/MSTransitionSample.h"
-#include "sample/MSHighLightSample.h"
-#include "sample/MSBurnPageSample.h"
+#include "MSVAOSample.h"
+#include "MSTransitionSample.h"
+#include "MSHighLightSample.h"
+#include "MSBurnPageSample.h"
 #include "MSImageFadeSample.h"
 #include "MSMosaicSample.h"
 

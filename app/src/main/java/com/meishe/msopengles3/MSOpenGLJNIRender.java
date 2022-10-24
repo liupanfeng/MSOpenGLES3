@@ -56,5 +56,6 @@ public class MSOpenGLJNIRender implements GLSurfaceView.Renderer {
     private native  void jniPaintGL();
     private native  void jniResizeGL(int width,int height);
 
+    private native void jniOnDestroy();
 
 }

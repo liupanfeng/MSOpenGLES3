@@ -4,15 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.widget.TextView;
 
-import com.meishe.msopengles3.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class RenderEffectActivity extends AppCompatActivity {
 
 
 
     private GLSurfaceView m_glSurfaceView;
+    private MSOpenGLJNIRender mMsOpenGLJNIRender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +21,15 @@ public class MainActivity extends AppCompatActivity {
         m_glSurfaceView.setEGLContextClientVersion(3);
 
         //m_glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY); // GLSurfaceView.RENDERMODE_WHEN_DIRTY
-        m_glSurfaceView.setRenderer(new MSOpenGLJNIRender(this));
+        mMsOpenGLJNIRender = new MSOpenGLJNIRender(this);
+        m_glSurfaceView.setRenderer(mMsOpenGLJNIRender);
 
         setContentView(m_glSurfaceView);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }

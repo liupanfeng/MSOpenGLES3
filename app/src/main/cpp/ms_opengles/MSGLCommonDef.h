@@ -16,7 +16,7 @@
 #include <assert.h>
 #include <android/asset_manager_jni.h>
 #include <android/asset_manager.h>
-#include "android_log_util.h"
+#include "../android_log_util.h"
 
 
 template<typename T>

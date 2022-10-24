@@ -10,8 +10,9 @@ INCLUDE_DIRECTORIES(${GLM_DIR}/include)
 INCLUDE_DIRECTORIES(${STBIMG_DIR}/include)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/sample)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/ms_opengles)
 
-file(GLOB all_files *.c *.cpp sample/*.cpp)
+file(GLOB all_files *.c *.cpp sample/*.cpp ms_opengles/*.cpp)
 
 add_library(
         msopengles3
