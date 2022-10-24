@@ -3,6 +3,17 @@
 //
 
 #include "MSAVCodecHandler.h"
+#include "MSAudioPlayer.h"
+
+#if !defined(MIN)
+#define MIN(A,B)	((A) < (B) ? (A) : (B))
+#endif
+
+std::atomic<bool>   m_bFileThreadRunning(false);
+std::atomic<bool>   m_bAudioThreadRunning(false);
+std::atomic<bool>   m_bVideoThreadRunning(false);
+std::atomic<bool>   m_bThreadRunning(false);
+
 
 MSAVCodecHandler::MSAVCodecHandler() {
 
@@ -41,6 +52,19 @@ void MSAVCodecHandler::StartPlayVideo() {
 }
 
 void MSAVCodecHandler::StopPlayVideo() {
+    m_bThreadRunning = false;
+    m_bReadFileEOF = false;
+
+    m_nCurrAudioTimeStamp =0.0f; //当前的音频时间戳
+    m_nLastAudioTimeStamp =0.0f; //最后的时间戳
+
+    /*重置时间基*/
+    m_vStreamTimeRational = av_make_q(0,0);
+    m_aStreamTimeRational = av_make_q(0,0);
+
+    m_eMediaPlayStatus = MEDIAPLAY_STATUS_STOP;
+
+//    JCAudioPlayer::GetInstance()->StopAudioPlayer();
 
 }
 

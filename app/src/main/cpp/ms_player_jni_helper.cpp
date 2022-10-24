@@ -19,15 +19,20 @@ void updateVideoData(MSYUVData_Frame* yuvFrame,unsigned long userData);
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_meishe_msopengles3_MSPlayer_ndkInitVideoPlayer(JNIEnv *env, jobject thiz) {
-    m_MSAVCodecHandler.SetupUpdateVideoCallback(updateVideoData,NULL);
-    env->GetJavaVM(&g_jvm);
-    g_obj=env->NewGlobalRef(thiz);
+    m_MSAVCodecHandler.SetupUpdateVideoCallback(updateVideoData,NULL);//设置回调
+    env->GetJavaVM(&g_jvm);  //获取jvm
+    g_obj=env->NewGlobalRef(thiz); //获取java的引用
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_meishe_msopengles3_MSPlayer_ndkStartPlayerWithFile(JNIEnv *env, jobject thiz,
                                                             jstring file_name) {
-
+    std::string fileName=env->GetStringUTFChars(file_name,JNI_OK);
+    LOGD("file name is %s",fileName.c_str());
+    m_MSAVCodecHandler.StopPlayVideo();  //播放之前 先停止
+    m_MSAVCodecHandler.SetVideoFilePath(fileName);  //设置文件路径
+    m_MSAVCodecHandler.InitVideoCodec(); //初始化解码器
+    m_MSAVCodecHandler.StartPlayVideo(); //开始播放
 }
 extern "C"
 JNIEXPORT void JNICALL

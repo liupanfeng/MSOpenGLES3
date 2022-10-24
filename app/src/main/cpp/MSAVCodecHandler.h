@@ -17,6 +17,7 @@ extern "C" {
 #include <vector>
 #include "MSYUVDataDefine.h"
 #include "MSQueueDef.h"
+#include "android_log_util.h"
 
 #ifndef int64
 #define int64 long long
