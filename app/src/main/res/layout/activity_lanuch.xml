@@ -16,5 +16,14 @@
         android:onClick="startToRenderEffect"
         />
 
+    <Button
+        android:layout_width="260dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="视频播放器"
+        android:layout_height="wrap_content"
+        android:onClick="startViewPlayer"
+        />
+
 
 </LinearLayout>

@@ -21,4 +21,8 @@ public class LaunchActivity extends AppCompatActivity {
     public void startToRenderEffect(View view) {
         startActivity(new Intent(mContext,RenderEffectActivity.class));
     }
+
+    public void startViewPlayer(View view) {
+        startActivity(new Intent(mContext,ViewPlayerActivity.class));
+    }
 }
