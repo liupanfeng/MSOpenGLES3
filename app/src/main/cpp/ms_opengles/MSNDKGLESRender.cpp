@@ -6,6 +6,7 @@
 #include "MSBurnPageSample.h"
 #include "MSImageFadeSample.h"
 #include "MSMosaicSample.h"
+#include "MSWatertoySample.h"
 
 /**
  * VBO EBO VAO 最佳实践
@@ -16,7 +17,8 @@ MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
 //    m_msBaseSample = new MSHighLightSample();   //绘制高光效果
 //    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
 //    m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
-    m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
+//    m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
+    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {
