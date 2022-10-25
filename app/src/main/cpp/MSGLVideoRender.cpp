@@ -9,7 +9,7 @@ MSGLVideoRender::MSGLVideoRender()
 
 MSGLVideoRender::~MSGLVideoRender()
 {
-    CCGLSafePtrDelete( m_pOpenGLShader);
+ //   CCGLSafePtrDelete( m_pOpenGLShader);
 }
 
 void MSGLVideoRender::InitGL()

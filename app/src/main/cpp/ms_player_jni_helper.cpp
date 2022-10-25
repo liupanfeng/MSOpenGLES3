@@ -73,3 +73,7 @@ JNIEXPORT void JNICALL
 Java_com_meishe_msopengles3_MSPlayer_ndkResizeGL(JNIEnv *env, jobject thiz, jint width,
                                                  jint height) {
 }
+
+void updateVideoData(MSYUVData_Frame* yuvFrame,unsigned long userData){
+
+}
