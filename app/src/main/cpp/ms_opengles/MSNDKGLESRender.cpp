@@ -8,6 +8,15 @@
 #include "../sample/MSMosaicSample.h"
 #include "../sample/MSWatertoySample.h"
 #include "../sample/MSMosaicSample.h"
+=======
+#include "sample/MSVAOSample.h"
+#include "sample/MSTransitionSample.h"
+#include "sample/MSHighLightSample.h"
+#include "sample/MSBurnPageSample.h"
+#include "MSImageFadeSample.h"
+#include "MSMosaicSample.h"
+#include "MSWatertoySample.h"
+>>>>>>> Stashed changes:app/src/main/cpp/MSNDKGLESRender.cpp
 
 /**
  * VBO EBO VAO 最佳实践
@@ -19,7 +28,11 @@ MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
     m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
 //    m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
 //    m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
+<<<<<<< Updated upstream:app/src/main/cpp/ms_opengles/MSNDKGLESRender.cpp
 //    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+=======
+    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+>>>>>>> Stashed changes:app/src/main/cpp/MSNDKGLESRender.cpp
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {
