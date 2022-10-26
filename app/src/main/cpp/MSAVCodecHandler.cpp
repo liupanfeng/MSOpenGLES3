@@ -515,11 +515,59 @@ void MSAVCodecHandler::decodeAndRenderVideo() {
 }
 
 void MSAVCodecHandler::tickVideoFrameTimerDelay(int64_t pts) {
+    if(m_vStreamTimeRational.den <=0){
+        return;
+    }
 
+    float currVideoTimeStamp=pts* av_q2d(m_vStreamTimeRational);
+
+    if(m_pAudioCodecCtx == NULL){
+
+        float sleepTime= 1000.0 / (float)m_videoFPS;
+        stdThreadSleep((int)sleepTime);
+
+        if(m_updateCurrentPTSCallback){
+            m_updateCurrentPTSCallback(currVideoTimeStamp,m_userDataPts);
+        }
+
+        return;
+    }
+
+
+    float diffTime = (currVideoTimeStamp - m_nCurrAudioTimeStamp)*1000;
+
+    int sleepTime= (int)diffTime;
+
+    //LOGD("A TimeStamp: %f",m_nCurrAudioTimeStamp);
+    //LOGD("AT: %f VT: %f ST: %d ",m_nCurrAudioTimeStamp,currVideoTimeStamp,sleepTime);
+
+    if(sleepTime > 0 && sleepTime < 5000 ){
+        stdThreadSleep(sleepTime);
+    }
+    else{
+        //stdThreadSleep(0);
+    }
 }
 
 void MSAVCodecHandler::tickAudioFrameTimerDelay(int64_t pts) {
+    if(m_aStreamTimeRational.den <=0){
+        return;
+    }
 
+    m_nCurrAudioTimeStamp=pts* av_q2d(m_aStreamTimeRational);
+
+    int diffTime= (int)(m_nCurrAudioTimeStamp - m_nLastAudioTimeStamp);
+
+    if(abs(diffTime) >= 1)
+    {
+        if(m_updateCurrentPTSCallback){
+            m_updateCurrentPTSCallback(m_nCurrAudioTimeStamp,m_userDataPts);
+        }
+
+        m_nLastAudioTimeStamp = m_nCurrAudioTimeStamp;
+    }
+
+    return;
 }
 
 void MSAVCodecHandler::doReadMediaFrameThread() {
@@ -615,7 +663,7 @@ void MSAVCodecHandler::doVideoDecodeShowThread() {
         return;
     }
     if (m_pVideoFrame == nullptr) {
-        m_pVideoFrame == av_frame_alloc();
+        m_pVideoFrame = av_frame_alloc();
     }
     while (m_bThreadRunning) {
         m_bVideoThreadRunning = true;  //这个标记线程

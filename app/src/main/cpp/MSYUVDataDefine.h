@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#pragma pack(push, 1)
+#pragma pack(push, 1)   //一个字节对齐
 
 #define MAX_AUDIO_FRAME_IN_QUEUE    1200
 #define MAX_VIDEO_FRAME_IN_QUEUE    600
@@ -38,5 +38,7 @@ typedef struct DecodedAudiodataDef
     unsigned char*  dataBuff;
     unsigned int    dataLength;
 }MSDecodedAudioData;
+
+#pragma pack(pop)
 
 #endif //MSOPENGLES3_MSYUVDATADEFINE_H

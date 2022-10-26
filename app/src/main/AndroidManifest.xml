@@ -18,6 +18,7 @@
         android:theme="@style/Theme.MSOpenGLES3">
         <activity
             android:name=".ViewPlayerActivity"
+            android:label="FFmpeg视频播放器"
             android:exported="false" />
         <activity
             android:name=".LaunchActivity"

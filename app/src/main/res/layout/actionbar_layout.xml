@@ -1,49 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="false"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentTop="false"
-    android:layout_alignParentEnd="false"
-    android:layout_alignParentRight="false"
-    android:layout_alignParentBottom="false"
-    >
-
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
 
     <TextView
         android:id="@+id/actionbar_textView"
-        android:layout_width="143dp"
-        android:layout_height="48dp"
-        android:layout_weight="1"
-        android:gravity="center|center_vertical"
-        android:inputType="textNoSuggestions"
-        android:text="JCMPlayer"
-        android:textAlignment="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MS FFmpeg播放器"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="RtlCompat" />
 
-    <Space
-        android:layout_width="169dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:keepScreenOn="false"
-        android:longClickable="false" />
 
     <Button
         android:id="@+id/actionbar_button"
-        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#00FFFFFF"
-        android:maxWidth="50dip"
-        android:maxHeight="50dip"
-        android:minWidth="40dip"
-        android:minHeight="40dip"
+        android:background="#00ffffff"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
         app:icon="@android:drawable/ic_menu_slideshow"
-        tools:ignore="SpeakableTextPresentCheck" />
+       />
 
-</LinearLayout>
+</RelativeLayout>

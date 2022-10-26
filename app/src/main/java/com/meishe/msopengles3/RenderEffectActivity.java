@@ -23,7 +23,7 @@ public class RenderEffectActivity extends AppCompatActivity {
         //m_glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY); // GLSurfaceView.RENDERMODE_WHEN_DIRTY
         mMsOpenGLJNIRender = new MSOpenGLJNIRender(this);
         m_glSurfaceView.setRenderer(mMsOpenGLJNIRender);
-
+        m_glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         setContentView(m_glSurfaceView);
     }
 

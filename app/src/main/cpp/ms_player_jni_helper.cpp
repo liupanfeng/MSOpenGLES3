@@ -133,5 +133,5 @@ void updateVideoData(MSYUVData_Frame* yuvFrame,unsigned long userData){
     }
 
     jniEnv->CallVoidMethod(g_obj,m_method);
-    jniEnv->DeleteGlobalRef(g_obj);
+    jniEnv->DeleteLocalRef(m_JClass);
 }

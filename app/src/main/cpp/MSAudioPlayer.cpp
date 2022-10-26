@@ -6,12 +6,12 @@
 #include "android_log_util.h"
 
 /*静态必须在c++文件做声明*/
-MSAudioPlayer* MSAudioPlayer::m_pInstance = NULL;
+MSAudioPlayer* MSAudioPlayer::m_pInstance = nullptr;
 pthread_mutex_t MSAudioPlayer::m_mutex;
-MSAudioPlayer::Garbage MSAudioPlayer::m_garbage;
+MSAudioPlayer::Garbage MSAudioPlayer::m_garbage;  //这个是怎么管理单例对象的？
 
 MSAudioPlayer::MSAudioPlayer() {
-    m_stream = NULL;
+    m_stream = nullptr;
 }
 
 MSAudioPlayer *MSAudioPlayer::GetInstance() {
@@ -51,7 +51,7 @@ int MSAudioPlayer::GetFreeSpace() {
 }
 
 bool MSAudioPlayer::WriteAudioData(const char *dataBuff, int size) {
-    if((dataBuff == NULL) || (size <= 0)){
+    if((dataBuff == nullptr) || (size <= 0)){
         return false;
     }
 

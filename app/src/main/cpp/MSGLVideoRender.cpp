@@ -9,7 +9,7 @@ MSGLVideoRender::MSGLVideoRender()
 
 MSGLVideoRender::~MSGLVideoRender()
 {
- //   CCGLSafePtrDelete( m_pOpenGLShader);
+   MSGLSafePtrDelete( m_pOpenGLShader);
 }
 
 void MSGLVideoRender::InitGL()
@@ -27,7 +27,6 @@ void MSGLVideoRender::InitGL()
         loadShaderResources(m_pAssetManager);
     }
 
-    return;
 }
 
 void MSGLVideoRender::PaintGL()
@@ -113,16 +112,16 @@ void MSGLVideoRender::PaintGL()
 
 void MSGLVideoRender::RendVideo(MSYUVData_Frame * yuvFrame)
 {
-    if(yuvFrame == NULL ){
+    if(yuvFrame == nullptr ){
         return;
     }
 
     if(m_nVideoH != yuvFrame->height || m_nVideoW != yuvFrame->width){
 
-        if(NULL != m_pBufYuv420p)
+        if(nullptr != m_pBufYuv420p)
         {
             free(m_pBufYuv420p);
-            m_pBufYuv420p=NULL;
+            m_pBufYuv420p=nullptr;
         }
     }
 
@@ -137,7 +136,7 @@ void MSGLVideoRender::RendVideo(MSYUVData_Frame * yuvFrame)
     //申请内存存一帧yuv图像数据,其大小为分辨率的1.5倍
     int nLen = m_yFrameLength + m_uFrameLength +m_vFrameLength;
 
-    if(NULL == m_pBufYuv420p)
+    if(nullptr == m_pBufYuv420p)
     {
         m_pBufYuv420p = ( unsigned char*) malloc(nLen);
     }
@@ -147,6 +146,7 @@ void MSGLVideoRender::RendVideo(MSYUVData_Frame * yuvFrame)
     memcpy(m_pBufYuv420p+m_yFrameLength +m_uFrameLength,yuvFrame->chromaR.dataBuffer,m_vFrameLength);
 
     m_bUpdateData =true;
+
 
 }
 void MSGLVideoRender::ResizeGL(int w, int h)
