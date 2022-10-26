@@ -16,10 +16,10 @@ MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
 //    m_msBaseSample = new MSVAOSample();  //绘制立方体
 //    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
 //    m_msBaseSample = new MSHighLightSample();   //绘制高光效果
-    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
+//    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
 //    m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
 //    m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
-//    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {

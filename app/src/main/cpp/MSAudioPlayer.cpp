@@ -5,6 +5,11 @@
 #include "MSAudioPlayer.h"
 #include "android_log_util.h"
 
+/*静态必须在c++文件做声明*/
+MSAudioPlayer* MSAudioPlayer::m_pInstance = NULL;
+pthread_mutex_t MSAudioPlayer::m_mutex;
+MSAudioPlayer::Garbage MSAudioPlayer::m_garbage;
+
 MSAudioPlayer::MSAudioPlayer() {
     m_stream = NULL;
 }
