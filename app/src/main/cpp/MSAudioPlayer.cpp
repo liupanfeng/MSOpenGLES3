@@ -33,7 +33,7 @@ void MSAudioPlayer::StopAudioPlayer() {
     if (m_stream != nullptr) {
         pthread_mutex_lock(&m_mutex);
         android_CloseAudioDevice(m_stream);
-        m_stream == nullptr;
+        m_stream = nullptr;
         pthread_mutex_unlock(&m_mutex);
     }
 }
