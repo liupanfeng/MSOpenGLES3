@@ -1,5 +1,5 @@
 
-#include "MSGLVideoRender.h"
+#include "../ms_video_player/MSGLVideoRender.h"
 
 
 MSGLVideoRender::MSGLVideoRender()

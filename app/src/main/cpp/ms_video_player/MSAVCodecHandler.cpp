@@ -2,8 +2,8 @@
 // Created by ms on 2022/10/24.
 //
 
-#include "MSAVCodecHandler.h"
-#include "MSAudioPlayer.h"
+#include "../ms_video_player/MSAVCodecHandler.h"
+#include "../ms_video_player/MSAudioPlayer.h"
 
 #if !defined(MIN)
 #define MIN(A, B)    ((A) < (B) ? (A) : (B))

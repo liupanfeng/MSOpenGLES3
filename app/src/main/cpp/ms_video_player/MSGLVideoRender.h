@@ -2,9 +2,9 @@
 #ifndef JCMPLAYER_CCGLVIDEORENDER_H
 #define JCMPLAYER_CCGLVIDEORENDER_H
 
-#include "ms_opengles/MSOpenGLShader.h"
-#include "ms_opengles/MSGLCommonDef.h"
-#include "MSYUVDataDefine.h"
+#include "MSOpenGLShader.h"
+#include "MSGLCommonDef.h"
+#include "../MSYUVDataDefine.h"
 
 class MSGLVideoRender {
 

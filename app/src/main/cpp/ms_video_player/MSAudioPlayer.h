@@ -6,7 +6,7 @@
 #define MSOPENGLES3_MSAUDIOPLAYER_H
 
 #include <mutex>
-#include "OpenSLInterface.h"
+#include "../ms_video_player/OpenSLInterface.h"
 
 #define OUT_BUFFER_SIZE 8192
 

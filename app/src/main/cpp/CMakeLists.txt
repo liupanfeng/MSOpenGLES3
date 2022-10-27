@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18.1)
 project("msopengles3")
 
-file(GLOB all_files *.c *.cpp sample/*.cpp ms_opengles/*.cpp)
+file(GLOB all_files *.c *.cpp sample/*.cpp ms_opengles/*.cpp ms_video_player/*.cpp ms_video_player/*.c)
 
 
 SET(GLM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libglm)
@@ -14,6 +14,7 @@ INCLUDE_DIRECTORIES(${GLM_DIR}/include)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/sample)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/ms_opengles)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/ms_video_player)
 
 
 INCLUDE_DIRECTORIES(${STBIMG_DIR}/include)

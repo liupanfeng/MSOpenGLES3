@@ -1,8 +1,8 @@
 //
 // Created by ms on 2022/10/24.
 //
-#include "OpenSLInterface.h"
-#include "android_log_util.h"
+#include "../ms_video_player/OpenSLInterface.h"
+#include "../android_log_util.h"
 
 #define CONV16BIT 32768
 #define CONVMYFLT (1./32768.)

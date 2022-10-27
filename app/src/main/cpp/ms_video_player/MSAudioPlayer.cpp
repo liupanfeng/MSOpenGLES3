@@ -2,8 +2,8 @@
 // Created by ms on 2022/10/24.
 //
 
-#include "MSAudioPlayer.h"
-#include "android_log_util.h"
+#include "../ms_video_player/MSAudioPlayer.h"
+#include "../android_log_util.h"
 
 /*静态必须在c++文件做声明*/
 MSAudioPlayer* MSAudioPlayer::m_pInstance = nullptr;

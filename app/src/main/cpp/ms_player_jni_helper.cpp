@@ -1,7 +1,7 @@
 #include <jni.h>
 
 #include "MSGLVideoRender.h"
-#include "MSAVCodecHandler.h"
+#include "ms_video_player/MSAVCodecHandler.h"
 #include "ms_opengles/MSGLCommonDef.h"
 
 
