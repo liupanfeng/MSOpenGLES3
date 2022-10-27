@@ -216,7 +216,7 @@ public class ViewPlayerActivity extends AppCompatActivity {
        runOnUiThread(new Runnable() {
            @Override
            public void run() {
-               mSeekBar.setProgress((int) time);
+               mSeekBar.setProgress((int) Math.floor(time));
                mCurrentPlaytime.setText(getMinutes((int) time) + ":" + getSeconds((int) time));
            }
        });
@@ -227,7 +227,7 @@ public class ViewPlayerActivity extends AppCompatActivity {
            @Override
            public void run() {
                mTotalDuration.setText(getMinutes((int) totalDuration) + ":" + getSeconds((int) totalDuration));
-               mSeekBar.setMax((int) totalDuration);
+               mSeekBar.setMax((int) Math.floor( totalDuration));
            }
        });
     }
