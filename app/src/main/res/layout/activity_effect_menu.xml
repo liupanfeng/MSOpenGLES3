@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EffectMenuActivity">
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="立方体效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderCubeEffect"
+        />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="移动效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderTransitionEffect"
+        />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="高光效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderHighLightEffect"
+        />
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="燃烧效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderBurnPaperEffect"
+        />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="渐隐效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderImageFadeEffect"
+        />
+
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="马赛克效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderMosaicEffect"
+        />
+    <Button
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="水波纹转场效果"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onRenderWaterEffect"
+        />
+</LinearLayout>

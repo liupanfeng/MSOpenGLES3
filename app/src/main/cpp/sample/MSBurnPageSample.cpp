@@ -45,11 +45,11 @@ void MSBurnPageSample::PaintGL() {
 
     m_pOpenGLShader->SetUniformValue("iChannel0",0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,m_texID[1]);
+    glBindTexture(GL_TEXTURE_2D,m_texID[3]);
 
     m_pOpenGLShader->SetUniformValue("iChannel1",1);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D,m_texID[0]);
+    glBindTexture(GL_TEXTURE_2D,m_texID[3]);
 
 
     m_pVAO->Bind();

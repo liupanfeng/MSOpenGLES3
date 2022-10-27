@@ -19,7 +19,7 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void startToRenderEffect(View view) {
-        startActivity(new Intent(mContext,RenderEffectActivity.class));
+        startActivity(new Intent(mContext,EffectMenuActivity.class));
     }
 
     public void startViewPlayer(View view) {

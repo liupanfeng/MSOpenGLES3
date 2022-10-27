@@ -8,9 +8,9 @@ MSNDKGLESRender* m_ndkGLESRender;
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_meishe_msopengles3_MSOpenGLJNIRender_jniInitGL(JNIEnv *env, jobject thiz,
-                                                        jobject asset_manager) {
+                                                        jobject asset_manager,jint type) {
     AAssetManager *aAssetManager= AAssetManager_fromJava(env,asset_manager);
-    m_ndkGLESRender =new MSNDKGLESRender();
+    m_ndkGLESRender =new MSNDKGLESRender(type);
     if (aAssetManager!= nullptr){
         m_ndkGLESRender->SetupAssetManager(aAssetManager);
     }

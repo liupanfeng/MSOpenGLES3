@@ -15,7 +15,7 @@
 
 class MSNDKGLESRender {
 public:
-    MSNDKGLESRender();
+    MSNDKGLESRender(int type);
     ~MSNDKGLESRender();
 
     void InitGL();

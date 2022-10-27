@@ -4,10 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="ndroid.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="ndroid.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MSOpenGLES3">
         <activity
-            android:name=".ViewPlayerActivity"
-            android:label="FFmpeg视频播放器"
+            android:name=".EffectMenuActivity"
             android:exported="false" />
+        <activity
+            android:name=".ViewPlayerActivity"
+            android:exported="false"
+            android:label="FFmpeg视频播放器" />
         <activity
             android:name=".LaunchActivity"
             android:exported="true">
@@ -31,7 +34,7 @@
         </activity>
         <activity
             android:name=".RenderEffectActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

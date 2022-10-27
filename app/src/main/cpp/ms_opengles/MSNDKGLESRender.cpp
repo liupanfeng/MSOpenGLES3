@@ -9,17 +9,45 @@
 #include "../sample/MSWatertoySample.h"
 #include "../sample/MSMosaicSample.h"
 
+#define MS_VAO_SAMPLE               100
+#define MS_TRANSITION_SAMPLE        101
+#define MS_HIGH_LIGHT_SAMPLE        102
+#define MS_BURN_PAGE_SAMPLE         103
+#define MS_IMAGE_FADE_SAMPLE        104
+#define MS_MOSAIC_SAMPLE            105
+#define MS_WATER_SAMPLE             106
+
 /**
  * VBO EBO VAO 最佳实践
  */
-MSNDKGLESRender::MSNDKGLESRender() : m_pAssetManager(nullptr) {
-//    m_msBaseSample = new MSVAOSample();  //绘制立方体
-//    m_msBaseSample = new MSTransitionSample();   //绘制shader动画
-//    m_msBaseSample = new MSHighLightSample();   //绘制高光效果
-//    m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
-//    m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
-//    m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
-    m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+MSNDKGLESRender::MSNDKGLESRender(int type) : m_pAssetManager(nullptr) {
+    switch (type) {
+        case MS_VAO_SAMPLE:
+            m_msBaseSample = new MSVAOSample();  //绘制立方体
+            break;
+        case MS_TRANSITION_SAMPLE:
+            m_msBaseSample = new MSTransitionSample();   //绘制shader动画
+            break;
+        case MS_HIGH_LIGHT_SAMPLE:
+            m_msBaseSample = new MSHighLightSample();   //绘制高光效果
+            break;
+        case MS_BURN_PAGE_SAMPLE:
+            m_msBaseSample = new MSBurnPageSample();   //绘制燃烧效果
+            break;
+        case MS_IMAGE_FADE_SAMPLE:
+            m_msBaseSample = new MSImageFadeSample();   //绘制渐隐效果
+            break;
+        case MS_MOSAIC_SAMPLE:
+            m_msBaseSample = new MSMosaicSample();   //绘制模糊效果
+            break;
+        case MS_WATER_SAMPLE:
+            m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+            break;
+        default:
+            m_msBaseSample = new MSWatertoySample();   //绘制水波纹效果
+            break;
+    }
+
 }
 
 MSNDKGLESRender::~MSNDKGLESRender() {

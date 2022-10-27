@@ -22,18 +22,20 @@ public class MSOpenGLJNIRender implements GLSurfaceView.Renderer {
 
     private Context mContext;
 
+    private int mType;
 
 
 
-    public MSOpenGLJNIRender(Context context){
+    public MSOpenGLJNIRender(Context context,int type){
         mContext = context;
+        mType=type;
     }
 
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         AssetManager assetManager = mContext.getAssets();
-        jniInitGL(assetManager);
+        jniInitGL(assetManager,mType);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class MSOpenGLJNIRender implements GLSurfaceView.Renderer {
     }
 
 
-    private native  void jniInitGL(AssetManager assetManager);
+    private native  void jniInitGL(AssetManager assetManager,int type);
     private native  void jniPaintGL();
     private native  void jniResizeGL(int width,int height);
 
