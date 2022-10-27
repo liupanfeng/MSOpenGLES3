@@ -112,6 +112,38 @@ public class MSPlayer implements GLSurfaceView.Renderer {
 
     }
 
+    public void onVideoPlayTime(float time){
+        ViewPlayerActivity activity = (ViewPlayerActivity)mContext;
+        if(activity != null) {
+            activity.onVideoPlayTime(time);
+        }
+    }
+
+    public void onPrepare(float totalDuration){
+        ViewPlayerActivity activity = (ViewPlayerActivity)mContext;
+        if(activity != null) {
+            activity.onPrepare(totalDuration);
+        }
+    }
+
+    public void onPauseViewPlay(){
+        ndkPauseVideoPlay();
+    }
+    public void onReStartVideoPlay(){
+        ndkReStartVideoPlay();
+    }
+
+    public void onPlayStatus(int state){
+        ViewPlayerActivity activity = (ViewPlayerActivity)mContext;
+        if(activity != null) {
+            activity.onPlayStatus(state);
+        }
+    }
+
+    public int getPlayStatus(){
+        return ndkGetPlayerStatus();
+    }
+
     /*-------------------------------------------native---------------------------------------*/
 
     static {
@@ -123,9 +155,11 @@ public class MSPlayer implements GLSurfaceView.Renderer {
 
     private native  void ndkStartPlayerWithFile(String fileName);
     private native  void ndkPauseVideoPlay();
+    private native  void ndkReStartVideoPlay();
     private native  void ndkStopVideoPlayer();
     private native  float ndkGetVideoSizeRatio();
     private native  float ndkGetVideoTotalSeconds();
+    private native  int   ndkGetPlayerStatus();
 
     private native  void ndkSeekMedia(float nPos);
     private native  void ndkInitGL(AssetManager assetManager);

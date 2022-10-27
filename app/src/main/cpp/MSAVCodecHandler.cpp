@@ -190,6 +190,9 @@ int MSAVCodecHandler::InitVideoCodec() {
              audioStream->time_base.num, audioStream->time_base.den);
     }
 
+    if (m_NotifyPrepare){
+        m_NotifyPrepare(GetMediaTotalSeconds());
+    }
     return 0;
 }
 
@@ -270,14 +273,23 @@ void MSAVCodecHandler::StopPlayVideo() {
 
     resetAllMediaPlayerParameters();
 
+    if (m_NotifyPlayState){
+        m_NotifyPlayState(MEDIAPLAY_STATUS_STOP);
+    }
 }
 
 void MSAVCodecHandler::SetMediaStatusPlay() {
     m_eMediaPlayStatus = MEDIAPLAY_STATUS_PLAYING;
+    if (m_NotifyPlayState){
+        m_NotifyPlayState(m_eMediaPlayStatus);
+    }
 }
 
 void MSAVCodecHandler::SetMediaStatusPause() {
     m_eMediaPlayStatus = MEDIAPLAY_STATUS_PAUSE;
+    if (m_NotifyPlayState){
+        m_NotifyPlayState(m_eMediaPlayStatus);
+    }
 }
 
 void MSAVCodecHandler::SeekMedia(float nPos) {
@@ -346,7 +358,8 @@ void MSAVCodecHandler::SetupUpdateVideoCallback(UpdateVideo2GUI_Callback callbac
 
 void MSAVCodecHandler::SetupUpdateCurrentPTSCallback(UpdateCurrentPTS_Callback callback,
                                                      unsigned long userData) {
-
+    m_updateCurrentPTSCallback = callback;
+    m_userDataPts=userData;
 }
 
 void MSAVCodecHandler::convertAndRenderVideo(AVFrame *videoFrame, long long int ppts) {
@@ -665,6 +678,9 @@ void MSAVCodecHandler::doVideoDecodeShowThread() {
     if (m_pVideoFrame == nullptr) {
         m_pVideoFrame = av_frame_alloc();
     }
+    if (m_NotifyPlayState){
+        m_NotifyPlayState(MEDIAPLAY_STATUS_PLAYING);
+    }
     while (m_bThreadRunning) {
         m_bVideoThreadRunning = true;  //这个标记线程
         if (m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE) {
@@ -863,3 +879,12 @@ std::string MSAVCodecHandler::getFileSuffix(const char *path) {
     }
     return std::string();
 }
+
+void MSAVCodecHandler::notifyPrepare(NotifyPrepare notifyPrepare) {
+    m_NotifyPrepare=notifyPrepare;
+}
+
+void MSAVCodecHandler::notifyPlayState(NotifyPlayState notifyPlayState) {
+    m_NotifyPlayState=notifyPlayState;
+}
+

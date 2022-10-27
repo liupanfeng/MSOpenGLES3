@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -34,6 +36,9 @@ public class ViewPlayerActivity extends AppCompatActivity {
 
     private float mVideoRatio;
     private float mVideoTotalSeconds;
+    private TextView mTotalDuration;
+    private TextView mCurrentPlaytime;
+    private ImageView mBtnPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,10 @@ public class ViewPlayerActivity extends AppCompatActivity {
         mVideoTotalSeconds = 0;
 
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        mSeekBar.bringToFront();
+        mTotalDuration = (TextView) findViewById(R.id.totalDuration);
+        mCurrentPlaytime = (TextView) findViewById(R.id.currentPlaytime);
+        mBtnPlay = (ImageView) findViewById(R.id.btn_play);
+
         mSeekBar.setProgress(0);
         mSeekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
 
@@ -58,6 +66,25 @@ public class ViewPlayerActivity extends AppCompatActivity {
         mGlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY); // GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
 
+        initActionBar();
+        initListener();
+    }
+
+    private void initListener() {
+        mBtnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int playStatus = mMSPlayer.getPlayStatus();
+                if (playStatus==0){
+                    mMSPlayer.onPauseViewPlay();
+                }else{
+                    mMSPlayer.onReStartVideoPlay();
+                }
+            }
+        });
+    }
+
+    private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -82,7 +109,6 @@ public class ViewPlayerActivity extends AppCompatActivity {
         }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);   //应用运行时，保持屏幕高亮，不锁屏
-
     }
 
     @Override
@@ -138,7 +164,7 @@ public class ViewPlayerActivity extends AppCompatActivity {
             topMargin = 200;
         }
 
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) mGlSurfaceView.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mGlSurfaceView.getLayoutParams();
         layoutParams.topMargin = topMargin;
         layoutParams.leftMargin = 0;
         layoutParams.rightMargin = 0;
@@ -151,10 +177,11 @@ public class ViewPlayerActivity extends AppCompatActivity {
     private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (progress % 10 == 0) {
-                Log.d(TAG, "当前进度：" + progress);
-
-                onSeekingVideo(progress);
+            if (fromUser){
+                if (progress % 10 == 0) {
+                    Log.d(TAG, "当前进度：" + progress);
+                    onSeekingVideo(progress);
+                }
             }
         }
 
@@ -188,6 +215,59 @@ public class ViewPlayerActivity extends AppCompatActivity {
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
+    }
+
+
+    public void onVideoPlayTime(float time){
+       runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
+               mSeekBar.setProgress((int) time);
+               mCurrentPlaytime.setText(getMinutes((int) time) + ":" + getSeconds((int) time));
+           }
+       });
+    }
+
+    public void onPrepare(float totalDuration){
+       runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
+               mTotalDuration.setText(getMinutes((int) totalDuration) + ":" + getSeconds((int) totalDuration));
+               mSeekBar.setMax((int) totalDuration);
+           }
+       });
+    }
+
+    public void onPlayStatus(int state){
+        Log.d("=====","state"+state);
+       runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
+               if (state==0){
+                   mBtnPlay.setBackgroundResource(R.mipmap.icon_edit_pause);
+               }else {
+                   mBtnPlay.setBackgroundResource(R.mipmap.icon_edit_play);
+               }
+           }
+       });
+    }
+
+    /*给我一个duration，转换成xxx分钟*/
+    private String getMinutes(int duration) {
+        int minutes = duration / 60;
+        if (minutes <= 9) {
+            return "0" + minutes;
+        }
+        return "" + minutes;
+    }
+
+    /*给我一个duration，转换成xxx秒*/
+    private String getSeconds(int duration) { //
+        int seconds = duration % 60;
+        if (seconds <= 9) {
+            return "0" + seconds;
+        }
+        return "" + seconds;
     }
 
 }

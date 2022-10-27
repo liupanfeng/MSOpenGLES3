@@ -41,6 +41,8 @@ enum MediaPlayStatus
 /*定义函数指针*/
 typedef void  (*UpdateVideo2GUI_Callback)    (MSYUVData_Frame* yuv,unsigned long userData);
 typedef void  (*UpdateCurrentPTS_Callback)   (float pts,unsigned long userData);
+typedef void  (*NotifyPrepare) (float onPrepare);
+typedef void (*NotifyPlayState) (int state);
 
 
 class MSAVCodecHandler {
@@ -72,6 +74,8 @@ public:
     void     SetupUpdateVideoCallback(UpdateVideo2GUI_Callback callback,unsigned long userData);
     void     SetupUpdateCurrentPTSCallback(UpdateCurrentPTS_Callback callback,unsigned long userData);
 
+    void     notifyPrepare(NotifyPrepare notifyPrepare );
+    void     notifyPlayState(NotifyPlayState notifyPlayState );
 
 private:
 
@@ -125,29 +129,31 @@ private:
 
 
     unsigned long               m_userDataVideo=0;
-    UpdateVideo2GUI_Callback    m_updateVideoCallback =NULL;
+    UpdateVideo2GUI_Callback    m_updateVideoCallback =nullptr;
+    NotifyPrepare               m_NotifyPrepare=nullptr;
+    NotifyPlayState             m_NotifyPlayState= nullptr;
 
     unsigned long               m_userDataPts=0;
-    UpdateCurrentPTS_Callback   m_updateCurrentPTSCallback =NULL;
+    UpdateCurrentPTS_Callback   m_updateCurrentPTSCallback =nullptr;
 
     MediaPlayStatus             m_eMediaPlayStatus;
 
 
-    AVFormatContext*    m_pFormatCtx    = NULL;
+    AVFormatContext*    m_pFormatCtx    = nullptr;
 
-    AVCodecContext*     m_pVideoCodecCtx     = NULL;
-    AVCodecContext*     m_pAudioCodecCtx     = NULL;
+    AVCodecContext*     m_pVideoCodecCtx     = nullptr;
+    AVCodecContext*     m_pAudioCodecCtx     = nullptr;
 
-    AVFrame*             m_pYUVFrame    = NULL;
+    AVFrame*             m_pYUVFrame    = nullptr;
 
-    AVFrame*             m_pVideoFrame  = NULL;
-    AVFrame*             m_pAudioFrame  = NULL;
+    AVFrame*             m_pVideoFrame  = nullptr;
+    AVFrame*             m_pAudioFrame  = nullptr;
 
-    SwrContext*          m_pAudioSwrCtx = NULL;
-    SwsContext*          m_pVideoSwsCtx = NULL;
+    SwrContext*          m_pAudioSwrCtx = nullptr;
+    SwsContext*          m_pVideoSwsCtx = nullptr;
 
     int                  m_videoFPS = 0;
-    uint8_t*             m_pYUV420Buffer   = NULL;
+    uint8_t*             m_pYUV420Buffer   = nullptr;
 
     float                m_nCurrAudioTimeStamp = 0.0f;
     float                m_nLastAudioTimeStamp = 0.0f;
@@ -161,7 +167,7 @@ private:
     int                  m_channel = 2;
     float                m_volumeRatio = 1.00;
 
-    uint8_t*             m_pSwrBuffer = NULL;
+    uint8_t*             m_pSwrBuffer = nullptr;
     int                  m_swrBuffSize = 0;
 
     MSMediaQueue<AVPacket *> m_audioPktQueue;
