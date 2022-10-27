@@ -273,22 +273,19 @@ void MSAVCodecHandler::StopPlayVideo() {
 
     resetAllMediaPlayerParameters();
 
-    if (m_NotifyPlayState){
-        m_NotifyPlayState(MEDIAPLAY_STATUS_STOP);
-    }
 }
 
 void MSAVCodecHandler::SetMediaStatusPlay() {
     m_eMediaPlayStatus = MEDIAPLAY_STATUS_PLAYING;
     if (m_NotifyPlayState){
-        m_NotifyPlayState(m_eMediaPlayStatus);
+        m_NotifyPlayState(MEDIAPLAY_STATUS_PLAYING);
     }
 }
 
 void MSAVCodecHandler::SetMediaStatusPause() {
     m_eMediaPlayStatus = MEDIAPLAY_STATUS_PAUSE;
     if (m_NotifyPlayState){
-        m_NotifyPlayState(m_eMediaPlayStatus);
+        m_NotifyPlayState(MEDIAPLAY_STATUS_PAUSE);
     }
 }
 
@@ -296,7 +293,6 @@ void MSAVCodecHandler::SeekMedia(float nPos) {
     if(nPos <0 ){
         return;
     }
-
     if(m_pFormatCtx == nullptr){
         return;
     }
@@ -304,18 +300,20 @@ void MSAVCodecHandler::SeekMedia(float nPos) {
     m_bThreadRunning = false;
     m_bReadFileEOF = false;
 
-    if (m_mediaType==MEDIATYPE_VIDEO){
-        m_nSeekingPos=(long long )nPos/ av_q2d(m_vStreamTimeRational);
-        if (m_audioStreamIdx>0&&m_videoStreamIdx>0){
-            av_seek_frame(m_pFormatCtx,m_videoStreamIdx,m_nSeekingPos,AVSEEK_FLAG_BACKWARD);
+    if(m_mediaType == MEDIATYPE_VIDEO){
+
+        m_nSeekingPos =(long long) nPos / av_q2d(m_vStreamTimeRational);
+
+        if( m_audioStreamIdx >= 0 && m_videoStreamIdx >= 0 ){
+            av_seek_frame(m_pFormatCtx, m_videoStreamIdx, m_nSeekingPos, AVSEEK_FLAG_BACKWARD );
         }
     }
 
     if(m_mediaType == MEDIATYPE_MUSIC){
         LOGD("SEEK AUDIO");
-        m_nSeekingPos=(long long )nPos/ av_q2d(m_aStreamTimeRational);
-        if (m_audioStreamIdx>0){
-            av_seek_frame(m_pFormatCtx,m_audioStreamIdx,m_nSeekingPos,AVSEEK_FLAG_ANY);
+        m_nSeekingPos =(int64) nPos / av_q2d(m_aStreamTimeRational);
+        if( m_audioStreamIdx >= 0  ){
+            av_seek_frame(m_pFormatCtx, m_audioStreamIdx, m_nSeekingPos, AVSEEK_FLAG_ANY );
         }
     }
 
@@ -329,6 +327,8 @@ void MSAVCodecHandler::SeekMedia(float nPos) {
     {
         freePacket( m_audioPktQueue.dequeue());
     }
+
+
 
     waitAllThreadsExit();
 
@@ -584,36 +584,52 @@ void MSAVCodecHandler::tickAudioFrameTimerDelay(int64_t pts) {
 }
 
 void MSAVCodecHandler::doReadMediaFrameThread() {
-    while (m_bThreadRunning) {
+    while (m_bThreadRunning)
+    {
         m_bFileThreadRunning = true;
-        if (m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE) {
+
+        if(m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE){
             stdThreadSleep(10);
+            continue;
         }
 
-        if (m_pVideoCodecCtx != nullptr && m_pAudioCodecCtx != nullptr) { //有视频,有音频
-            if (m_videoPktQueue.size() > MAX_VIDEO_FRAME_IN_QUEUE
-                && m_audioPktQueue.size() > MAX_AUDIO_FRAME_IN_QUEUE) {  //这样会导致音频或者视频会大于定义的最大值
+        if(m_pVideoCodecCtx != NULL && m_pAudioCodecCtx != NULL){ //有视频,有音频
+
+            if( m_videoPktQueue.size() > MAX_VIDEO_FRAME_IN_QUEUE && m_audioPktQueue.size() > MAX_AUDIO_FRAME_IN_QUEUE)
+            {
                 stdThreadSleep(10);
                 continue;
             }
-        } else if (m_pVideoCodecCtx != NULL && m_pAudioCodecCtx == NULL) { //只有视频,没有音频
-            float sleepTime = 1000.0 / (float) m_videoFPS;
-            stdThreadSleep(sleepTime);
-        } else {  //只有音频
-            if (m_audioPktQueue.size() > MAX_AUDIO_FRAME_IN_QUEUE) {
+
+        }
+        else if(m_pVideoCodecCtx != NULL && m_pAudioCodecCtx == NULL){ //只有视频,没有音频
+
+            float sleepTime= 1000.0 / (float)m_videoFPS;
+            stdThreadSleep((int)sleepTime);
+
+        }
+        else{//只有音频
+            if( m_videoPktQueue.size() > MAX_AUDIO_FRAME_IN_QUEUE )
+            {
                 stdThreadSleep(10);
                 continue;
             }
         }
 
-        if (m_bReadFileEOF == false) {
+        //qDebug()<<"QUEUE"<< m_videoPktQueue.size() << m_audioPktQueue.size()<<m_bReadFileEOF;
+        if(m_bReadFileEOF == false){
             readMediaPacket();
-        } else {
+        }else{
+            //m_bThreadRunning = false;
             stdThreadSleep(10);
         }
-        LOGD("read file thread exit...");
-        m_bFileThreadRunning = false;
+
     }
+
+    LOGD("read file thread exit...");
+
+    m_bFileThreadRunning = false;
+
     return;
 }
 
@@ -621,106 +637,129 @@ void MSAVCodecHandler::doReadMediaFrameThread() {
  * 音频数据解码  AVPacket->AVFrame
  */
 void MSAVCodecHandler::doAudioDecodePlayThread() {
-    if (m_pFormatCtx == nullptr) {
+    if(m_pFormatCtx == NULL){
         return;
     }
 
-    if (m_pAudioFrame == nullptr) {
+
+    if(m_pAudioFrame == NULL)
+    {
         m_pAudioFrame = av_frame_alloc();
     }
 
-    while (m_bThreadRunning) {
+
+    while(m_bThreadRunning)
+    {
         m_bAudioThreadRunning = true;
-        if (m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE) {
+
+        if(m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE){
             stdThreadSleep(10);
             continue;
         }
 
-        if (m_audioPktQueue.isEmpty()) {
+        if(m_audioPktQueue.isEmpty()){
             stdThreadSleep(1);
             continue;
         }
 
-        AVPacket *packet = (AVPacket *) m_audioPktQueue.dequeue();
-        if (packet == nullptr) {
-            break;
-        }
-        if (!m_bThreadRunning) {
-            freePacket(packet);
+
+        AVPacket* pkt = (AVPacket*)m_audioPktQueue.dequeue();
+        if(pkt == NULL){
             break;
         }
 
-        tickAudioFrameTimerDelay(packet->pts);  //这个是关键  音视频同步策略
+        if(!m_bThreadRunning){
+            freePacket( pkt);
+            break;
+        }
 
-        int retValue = avcodec_send_packet(m_pAudioCodecCtx, packet);
-        if (retValue != 0) {
-            freePacket(packet);
+        tickAudioFrameTimerDelay(pkt->pts);
+
+
+        int retValue = avcodec_send_packet(m_pAudioCodecCtx, pkt);
+        if (retValue != 0)
+        {
+            freePacket( pkt);
+
             continue;
         }
 
-        int decodeRet = avcodec_receive_frame(m_pAudioCodecCtx, m_pAudioFrame);
 
-        if (decodeRet == 0) {
-            convertAndPlayAudio(m_pAudioFrame);  //解码出来的音频帧进行播放
+        int decodeRet = avcodec_receive_frame(m_pAudioCodecCtx, m_pAudioFrame);
+        if (decodeRet == 0)
+        {
+            convertAndPlayAudio(m_pAudioFrame);
         }
-        freePacket(packet);
+
+
+        freePacket( pkt);
 
     }
+
     LOGD("audio decode show  thread exit...");
+
     m_bAudioThreadRunning = false;
+
     return;
 }
 
 void MSAVCodecHandler::doVideoDecodeShowThread() {
-    if (m_pFormatCtx == nullptr) {
+    if(m_pFormatCtx == NULL){
         return;
     }
-    if (m_pVideoFrame == nullptr) {
+
+    if (m_pVideoFrame == NULL)
+    {
         m_pVideoFrame = av_frame_alloc();
     }
-    if (m_NotifyPlayState){
-        m_NotifyPlayState(MEDIAPLAY_STATUS_PLAYING);
-    }
-    while (m_bThreadRunning) {
-        m_bVideoThreadRunning = true;  //这个标记线程
-        if (m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE) {
+
+    while(m_bThreadRunning)
+    {
+
+        m_bVideoThreadRunning = true;
+
+        if(m_eMediaPlayStatus == MEDIAPLAY_STATUS_PAUSE){
             stdThreadSleep(10);
             continue;
         }
 
-        if (m_videoPktQueue.isEmpty()) {
+        if(m_videoPktQueue.isEmpty()){
             stdThreadSleep(1);
             continue;
         }
 
-        AVPacket *packet = (AVPacket *) m_videoPktQueue.dequeue();
-
-        if (packet == nullptr) {
-            break;
-        }
-        if (!m_bThreadRunning) {
-            freePacket(packet);
+        AVPacket* pkt = (AVPacket*)m_videoPktQueue.dequeue();
+        if(pkt == NULL){
             break;
         }
 
-        tickVideoFrameTimerDelay(packet->pts);
+        if(!m_bThreadRunning){
+            freePacket( pkt);
+            break;
+        }
 
-        int retValue = avcodec_send_packet(m_pVideoCodecCtx, packet);
+        tickVideoFrameTimerDelay(pkt->pts);
 
-        if (retValue != 0) {
-            freePacket(packet);
+        int retValue = avcodec_send_packet(m_pVideoCodecCtx, pkt);
+        if (retValue != 0)
+        {
+            freePacket( pkt);
+
             continue;
         }
 
-        int decodeRet = avcodec_receive_frame(m_pVideoCodecCtx, m_pVideoFrame);
-        if (decodeRet == 0) {
-            convertAndRenderVideo(m_pVideoFrame, packet->pts);
+        int decodeRet  = avcodec_receive_frame(m_pVideoCodecCtx, m_pVideoFrame);
+        if (decodeRet == 0)
+        {
+            convertAndRenderVideo(m_pVideoFrame,pkt->pts);
         }
 
-        freePacket(packet);  //解码 播放之后需要将packet 释放了
+
+        freePacket( pkt);
     }
 
     LOGD("video decode show  thread exit...");
+
     m_bVideoThreadRunning = false;
 
     return;

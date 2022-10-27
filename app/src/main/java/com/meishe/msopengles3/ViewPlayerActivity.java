@@ -177,12 +177,6 @@ public class ViewPlayerActivity extends AppCompatActivity {
     private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (fromUser){
-                if (progress % 10 == 0) {
-                    Log.d(TAG, "当前进度：" + progress);
-                    onSeekingVideo(progress);
-                }
-            }
         }
 
         @Override
@@ -199,7 +193,7 @@ public class ViewPlayerActivity extends AppCompatActivity {
 
     private void onSeekingVideo(float aValue) {
 
-        float currSliderRatio = aValue / 1000.0f;
+        float currSliderRatio = aValue / (mSeekBar.getMax()*1.0f);
         float seekingTime = currSliderRatio * mVideoTotalSeconds;
 
         if (seekingTime > mVideoTotalSeconds) {
