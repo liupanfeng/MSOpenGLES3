@@ -738,6 +738,11 @@ void MSAVCodecHandler::doVideoDecodeShowThread() {
             break;
         }
 
+        LOGD("=======packet.pts=%ld",pkt->pts);
+        LOGD("=======packet.dts================%ld",pkt->dts);
+        float videoTimeStamp=pkt->pts* av_q2d(m_vStreamTimeRational);
+        LOGD("=======videoTimeStamp is================%f",videoTimeStamp);
+
         tickVideoFrameTimerDelay(pkt->pts);
 
         int retValue = avcodec_send_packet(m_pVideoCodecCtx, pkt);
