@@ -34,7 +34,7 @@ Java_com_meishe_msopengles3_capture_MSOpenCVRender_nativeInitGL(JNIEnv *env, job
         }else{
             LOGD("Init facetracker success!!!");
         }
-
+        env->ReleaseStringUTFChars(file_path,dirPath);
     }
 
     msGlVideoRender->InitGL();
