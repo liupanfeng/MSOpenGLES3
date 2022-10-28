@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.opengl.GLSurfaceView;
@@ -14,6 +15,11 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.meishe.msopengles3.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CaptureActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class CaptureActivity extends AppCompatActivity {
     private MSCamera    m_cvCamera;
     private GLSurfaceView m_glSurfaceView;
     private MSOpenCVRender          m_cvRender;
+    private File m_modelFile;
+    private String m_dirPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,9 @@ public class CaptureActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_capture);
 
-        m_cvRender = new MSOpenCVRender(this);
+        loadFaceTrackerModelFiles();
+        getFilePrivateDirectoryPath();
+        m_cvRender = new MSOpenCVRender(this,m_dirPath);
         m_glSurfaceView = findViewById(R.id.glSurfaceView);
         m_glSurfaceView.setEGLContextClientVersion(3);
         m_glSurfaceView.setRenderer(m_cvRender);
@@ -51,6 +61,20 @@ public class CaptureActivity extends AppCompatActivity {
 
     }
 
+
+    private File m_emptyFile;
+    private void getFilePrivateDirectoryPath()
+    {
+
+        File modelDir = getDir("model", Context.MODE_PRIVATE);
+        m_emptyFile = new File(modelDir, "");
+        m_dirPath = m_emptyFile.getAbsolutePath();
+
+        modelDir.delete();
+        //Log.d("OpenCV","opencv model file Path: " + m_dirPath);
+        //m_recordPath=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getPath() + "/temp/" + (System.currentTimeMillis() + ".mp4");
+        //Log.d("Record video","record video file Path: " + m_recordPath);
+    }
 
     private  void verifyStoragePermissions() {
         int i = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -72,6 +96,50 @@ public class CaptureActivity extends AppCompatActivity {
     public void RequestOpenGLRender()
     {
         m_glSurfaceView.requestRender();
+    }
+
+
+
+
+
+    private void loadFaceTrackerModelFiles()
+    {
+
+        try{
+            File modelDir = getDir("model", Context.MODE_PRIVATE);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            InputStream inStream_c = getAssets().open("haar_roboman_ff_alt2.xml");
+            File m_classifierFile = new File(modelDir, "haar_roboman_ff_alt2.xml");
+            FileOutputStream outStream_c = new FileOutputStream(m_classifierFile);
+
+            while ((bytesRead = inStream_c.read(buffer)) != -1) {
+                outStream_c.write(buffer, 0, bytesRead);
+            }
+
+
+            inStream_c.close();
+            outStream_c.close();
+
+
+            InputStream inStream_m = getAssets().open("roboman-landmark-model.bin");
+            m_modelFile = new File(modelDir, "roboman-landmark-model.bin");
+            FileOutputStream outStream_m = new FileOutputStream(m_modelFile);
+
+            while ((bytesRead = inStream_m.read(buffer)) != -1) {
+                outStream_m.write(buffer, 0, bytesRead);
+            }
+
+            inStream_m.close();
+            outStream_m.close();
+
+            modelDir.delete();
+
+        } catch (IOException e){
+            e.printStackTrace();
+            //Log.d("","Failed to load facetracker model. Exception thrown: " + e);
+        }
     }
 
 

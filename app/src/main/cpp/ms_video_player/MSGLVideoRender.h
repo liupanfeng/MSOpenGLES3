@@ -16,6 +16,8 @@ public:
     void PaintGL();
     void ResizeGL(int w,int h);
 
+    void SetupAssetManager(AAssetManager *pManager,std::string dirPath);
+
     void SetupAssetManager(AAssetManager *pManager);
 
     void RendVideo(MSYUVData_Frame * frame);
@@ -24,7 +26,7 @@ private:
     void loadShaderResources(AAssetManager *pManager);
 
 private:
-
+    std::string         m_directoryPath;
     AAssetManager*        m_pAssetManager;
     MSOpenGLShader*       m_pOpenGLShader;
 

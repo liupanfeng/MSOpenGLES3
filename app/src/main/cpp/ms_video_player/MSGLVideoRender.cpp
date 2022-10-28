@@ -154,6 +154,12 @@ void MSGLVideoRender::ResizeGL(int w, int h)
     glViewport(0,0,w,h);
 }
 
+void MSGLVideoRender::SetupAssetManager(AAssetManager *pManager,std::string dirPath)
+{
+    m_pAssetManager = pManager;
+    m_directoryPath=dirPath;
+}
+
 void MSGLVideoRender::SetupAssetManager(AAssetManager *pManager)
 {
     m_pAssetManager = pManager;

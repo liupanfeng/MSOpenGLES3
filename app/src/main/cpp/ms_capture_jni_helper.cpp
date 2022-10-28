@@ -4,6 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/imgproc.hpp>
+#include <trackerexport.h>
 
 
 #include "android_log_util.h"
@@ -16,11 +17,24 @@ MSGLVideoRender *msGlVideoRender;
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_meishe_msopengles3_capture_MSOpenCVRender_nativeInitGL(JNIEnv *env, jobject thiz,
-                                                                jobject asset_manager) {
+                                                                jobject asset_manager,jstring file_path) {
     AAssetManager *aAssetManager= AAssetManager_fromJava(env,asset_manager);
     msGlVideoRender = new MSGLVideoRender();
     if (aAssetManager!= nullptr){
-        msGlVideoRender->SetupAssetManager(aAssetManager);
+        const char* dirPath=(char*)env->GetStringUTFChars(file_path,JNI_OK);
+        std::string dirPathString=std::string (dirPath);
+        msGlVideoRender->SetupAssetManager(aAssetManager,dirPathString);
+
+        std::string modelPath = dirPathString + "/roboman-landmark-model.bin";
+        std::string classiPath = dirPathString + "/haar_roboman_ff_alt2.xml";
+
+        bool retValue=FACETRACKER_API_init_facetracker_resources(modelPath.c_str(),classiPath.c_str());
+        if(!retValue){
+            LOGE("Init facetracker failed.....");
+        }else{
+            LOGD("Init facetracker success!!!");
+        }
+
     }
 
     msGlVideoRender->InitGL();
@@ -56,6 +70,12 @@ Java_com_meishe_msopengles3_capture_MSOpenCVRender_nativeUpdateCameraFrame(JNIEn
     cv::flip(bgrCVFrame,bgrCVFrame,1);  //镜像旋转
 
     //bgrCVFrame 可以在opencv里面去做很多事情.
+    FACETRACKER_API_facetracker_obj_track(bgrCVFrame);
+    ofVec2f posVec2f=FACETRACKER_API_getPosition(bgrCVFrame);
+
+    glm::vec2 posValue = glm::vec2(posVec2f.x,posVec2f.y);
+    float   scaleValue=FACETRACKER_API_getScale(bgrCVFrame);
+    LOGD("TRACKER: %f %f",posVec2f.x,posVec2f.y);
 
     cv::cvtColor(bgrCVFrame,yuvCVFrame,cv::COLOR_BGR2YUV_I420);  //将数据从BGR格式转成I420
 

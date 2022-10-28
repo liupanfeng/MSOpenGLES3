@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-frtti -fexceptions -std=c++11"
+                cppFlags "-frtti -fexceptions -Wl,--allow-multiple-definition -std=c++11"
                 arguments "-DANDROID_STL=c++_shared"
             }
         }

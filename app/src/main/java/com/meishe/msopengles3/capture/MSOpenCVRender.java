@@ -18,10 +18,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class MSOpenCVRender implements GLSurfaceView.Renderer {
 
     private Context m_contex;
+    private String  m_directoryPath;
 
-
-    public MSOpenCVRender(Context ctx){
+    public MSOpenCVRender(Context ctx,String filePath){
         m_contex = ctx;
+        m_directoryPath=filePath;
     }
 
 
@@ -32,7 +33,7 @@ public class MSOpenCVRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         AssetManager assets = m_contex.getAssets();
-        nativeInitGL(assets);
+        nativeInitGL(assets,m_directoryPath);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class MSOpenCVRender implements GLSurfaceView.Renderer {
     }
 
 
-    private native void nativeInitGL(AssetManager assetManager);
+    private native void nativeInitGL(AssetManager assetManager,String filePath);
 
     private native void nativeDrawGL();
 
