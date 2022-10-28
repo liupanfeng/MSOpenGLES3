@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.meishe.msopengles3.capture.CaptureActivity;
+
 public class LaunchActivity extends AppCompatActivity {
 
     private Context mContext;
@@ -24,5 +26,9 @@ public class LaunchActivity extends AppCompatActivity {
 
     public void startViewPlayer(View view) {
         startActivity(new Intent(mContext,ViewPlayerActivity.class));
+    }
+
+    public void startCamera(View view) {
+        startActivity(new Intent(mContext, CaptureActivity.class));
     }
 }
