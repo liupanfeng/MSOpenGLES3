@@ -386,6 +386,8 @@ void MSAVCodecHandler::convertAndRenderVideo(AVFrame *videoFrame, long long int 
     unsigned int lumaLength= m_pVideoCodecCtx->height * (MIN(videoFrame->linesize[0], m_pVideoCodecCtx->width));
     unsigned int chromBLength=((m_pVideoCodecCtx->height)/2)*(MIN(videoFrame->linesize[1], (m_pVideoCodecCtx->width)/2));
     unsigned int chromRLength=((m_pVideoCodecCtx->height)/2)*(MIN(videoFrame->linesize[2], (m_pVideoCodecCtx->width)/2));
+
+
     LOGD("  m_pVideoCodecCtx->height=%d   m_pVideoCodecCtx->width=%d "
          " videoFrame->linesize[0]=%d "
          "  videoFrame->linesize[1]=%d"
@@ -394,6 +396,8 @@ void MSAVCodecHandler::convertAndRenderVideo(AVFrame *videoFrame, long long int 
          videoFrame->linesize[0],
          videoFrame->linesize[1],
          videoFrame->linesize[2]);
+
+    LOGD("lumaLength==%d,  chromBLength=%d  chromRLength=%d ",lumaLength,chromBLength,chromRLength);
 
     MSYUVData_Frame *updateYUVFrame = new MSYUVData_Frame();
 

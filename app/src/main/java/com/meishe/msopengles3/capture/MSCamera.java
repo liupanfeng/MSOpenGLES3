@@ -42,6 +42,10 @@ public class MSCamera implements Camera.PreviewCallback {
         m_texture = new SurfaceTexture(m_camTexture[0]);
     }
 
+    private void createOesTexture() {
+        GLES30.glGenTextures(1, m_camTexture, 0);
+    }
+
     public void InitCamPermissionGranted() {
         m_camera = initCamera();
         try {
@@ -78,9 +82,7 @@ public class MSCamera implements Camera.PreviewCallback {
         }
     }
 
-    private void createOesTexture() {
-        GLES30.glGenTextures(1, m_camTexture, 0);
-    }
+
 
     public void DestoryCamera() {
         if (m_camera != null) {
