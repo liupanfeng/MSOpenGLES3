@@ -388,16 +388,10 @@ void MSAVCodecHandler::convertAndRenderVideo(AVFrame *videoFrame, long long int 
     unsigned int chromRLength=((m_pVideoCodecCtx->height)/2)*(MIN(videoFrame->linesize[2], (m_pVideoCodecCtx->width)/2));
 
 
-    LOGD("  m_pVideoCodecCtx->height=%d   m_pVideoCodecCtx->width=%d "
-         " videoFrame->linesize[0]=%d "
-         "  videoFrame->linesize[1]=%d"
-         " videoFrame->linesize[2]=%d",m_pVideoCodecCtx->height,
-         m_pVideoCodecCtx->width,
-         videoFrame->linesize[0],
-         videoFrame->linesize[1],
-         videoFrame->linesize[2]);
-
-    LOGD("lumaLength==%d,  chromBLength=%d  chromRLength=%d ",lumaLength,chromBLength,chromRLength);
+    LOGD(" m_pVideoCodecCtx->width=%d " ,m_pVideoCodecCtx->width);
+    LOGD(" m_pVideoCodecCtx->height=%d ",m_pVideoCodecCtx->height);
+    LOGD(" videoFrame->linesize[0]=%d ",videoFrame->linesize[0]);
+    LOGD(" lumaLength==%d ",lumaLength);
 
     MSYUVData_Frame *updateYUVFrame = new MSYUVData_Frame();
 
@@ -741,11 +735,11 @@ void MSAVCodecHandler::doVideoDecodeShowThread() {
             freePacket( pkt);
             break;
         }
-
-        LOGD("=======packet.pts=%ld",pkt->pts);
-        LOGD("=======packet.dts================%ld",pkt->dts);
-        float videoTimeStamp=pkt->pts* av_q2d(m_vStreamTimeRational);
-        LOGD("=======videoTimeStamp is================%f",videoTimeStamp);
+//
+//        LOGD("=======packet.pts=%ld",pkt->pts);
+//        LOGD("=======packet.dts================%ld",pkt->dts);
+//        float videoTimeStamp=pkt->pts* av_q2d(m_vStreamTimeRational);
+//        LOGD("=======videoTimeStamp is================%f",videoTimeStamp);
 
         tickVideoFrameTimerDelay(pkt->pts);
 
