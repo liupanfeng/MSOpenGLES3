@@ -42,7 +42,7 @@ void MSFrameBufferObject::GenerateFBOWithSize(int width, int height) {
 
     glGenRenderbuffers(1, &m_renderBufferId);
     glBindRenderbuffer(GL_RENDERBUFFER, m_renderBufferId);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width,height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width,height);   //注意这里 GL_DEPTH_COMPONENT 参数
     glBindRenderbuffer(GL_RENDERBUFFER,0);
 
 
